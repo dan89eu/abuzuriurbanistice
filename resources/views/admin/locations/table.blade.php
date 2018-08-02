@@ -2,7 +2,8 @@
 <table class="table table-striped table-bordered" id="locations-table" width="100%">
     <thead>
      <tr>
-        <th>Name</th>
+         <th>id</th>
+         <th>Name</th>
         <th>Description</th>
         <th>Status Id</th>
         <th>Lat</th>
@@ -13,6 +14,7 @@
     <tbody>
     @foreach($locations as $location)
         <tr>
+            <td>{!! $location->id !!}</td>
             <td>{!! $location->name !!}</td>
             <td>{!! $location->description !!}</td>
             <td>{!! $location->status_id !!}</td>

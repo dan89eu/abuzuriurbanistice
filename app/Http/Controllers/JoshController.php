@@ -303,12 +303,9 @@ class JoshController extends Controller {
 
     public function showHome()
     {
-
-
-
         if(Sentinel::check()){
 
-        	$locations = Location::with('status')->get();
+        	$locations = Location::with(['status','statuses','files'])->get();
 
 	        return view('admin.index1',['locations'=>$locations]);
         }

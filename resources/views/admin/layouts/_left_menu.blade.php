@@ -7,7 +7,7 @@
             <span class="title">Dashboard</span>
         </a>
     </li>
-   <!-- <li {!! (Request::is('admin/index1') ? 'class="active"' : '') !!}>
+   <li {!! (Request::is('admin/index1') ? 'class="active"' : '') !!}>
         <a href="{{  URL::to('admin/index1') }}">
             <i class="livicon" data-name="dashboard" data-size="18" data-c="#EF6F6C" data-hc="#EF6F6C"
                data-loop="true"></i>

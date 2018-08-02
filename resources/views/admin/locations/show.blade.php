@@ -11,7 +11,11 @@ Location
     <link href="{{ asset('assets/css/pages/timeline2.css') }}" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/gmaps/css/examples.css') }}"/>
     <link href="{{ asset('assets/css/pages/googlemaps_custom.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendors/dropzone/css/dropzone.css') }}" rel="stylesheet" type="text/css" />
     <style>
+        .dropzone .dz-preview .dz-image img {
+            width :100%;
+        }
         ul.list-group:after {
             clear: both;
             display: block;
@@ -85,6 +89,12 @@ Location
                     <div class="form-group col-sm-12">
                         {!! Form::textarea('description', null, ['placeholder' => 'Add some notes', 'class' => 'form-control']) !!}
                         </div>
+
+                    <div class="form-group col-sm-12">
+                        <div id="dZUpload" class="dropzone">
+                            <div class="dz-default dz-message">Select files</div>
+                        </div>
+                    </div>
                             <div class="form-group col-sm-12 text-center">
 {!! Form::submit('Update', ['class' => 'btn btn-primary col-sm-12']) !!}
                     </div>
@@ -119,7 +129,10 @@ Location
                                         <div class="timeline-panel" style="display:inline-block;">
                                             <div class="timeline-heading">
                                                 <h4 class="timeline-title">Status Changed: <strong>{{ $statuses->name }}</strong></h4>
+                                                @foreach ($statuses->pivot->files as $file)
 
+                                                    <img src="{{URL::to('/uploads/files/thumb_'.$file->name)}}" class='img-thumbnail' alt="image">
+                                                @endforeach
                                                 <p>
                                                     <small class="text-muted">
                                                         {{ $statuses->created_at}}
@@ -150,4 +163,44 @@ Location
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1hWquLT9SvRFXzQsY-iX3X24kt8cxVi8&libraries=places"></script>
     <script type="text/javascript" src="{{ asset('assets/vendors/gmaps/js/gmaps.min.js') }}"></script>
     <script type="text/javascript" src="{{ mix('assets/js/pages/custommaps.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendors/dropzone/js/dropzone.js') }}" ></script>
+    <script>
+
+	    Dropzone.autoDiscover = false;
+	    jQuery(document).ready(function() {
+
+		    var myDropZone = $("#dZUpload").dropzone({
+			    url: "{!! URL::to('admin/file/create') !!}",
+			    addRemoveLinks: true,
+			    acceptedFiles: 'image/*',
+			    params: {"_token": '{{ csrf_token() }}'},
+			    success: function (file, response) {
+				    file.id = jQuery.parseJSON(response).id
+				    var imgName = response;
+
+				    file.previewElement.classList.add("dz-success");
+				    console.log("Successfully uploaded :" + imgName);
+				    $('<input>').attr({
+					    type: 'input',
+					    name: 'file[]',
+					    value: file.id,
+					    hidden: true
+				    }).appendTo('#dZUpload');
+			    },
+			    error: function (file, response) {
+				    file.previewElement.classList.add("dz-error");
+			    },
+			    removedfile:function (file){
+				    console.log("file",file)
+				    $.ajax({
+					    url: "/admin/file/delete",
+					    type: "DELETE",
+					    data: { "id" : file.id, "_token": '{{ csrf_token() }}' }
+				    });
+				    $(document).find(file.previewElement).remove();
+				    $('input[value="'+file.id+'"]').remove();
+			    }
+		    });
+	    });
+    </script>
 @stop

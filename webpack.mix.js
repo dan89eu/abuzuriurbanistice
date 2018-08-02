@@ -195,6 +195,7 @@ mix.copy(resourcesAssets + 'images', destImages, false);
 mix.copy(resourcesAssets + 'images/authors', destImages + '/authors');
 mix.copy(resourcesAssets + 'images/cart', destImages + '/cart');
 mix.copy(resourcesAssets + 'images/gallery', destImages + '/gallery');
+mix.copy(resourcesAssets + 'frontend', dest + '/frontend');
 //
 //
 // daterange picker

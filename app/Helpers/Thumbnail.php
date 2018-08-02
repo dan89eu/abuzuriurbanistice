@@ -2,9 +2,11 @@
 
 namespace App\Helpers;
 
+use Intervention\Image\Facades\Image;
+
 class Thumbnail {
 	public static function generate_image_thumbnail($source_image_path, $thumbnail_image_path,$thumbnail_with=250,$thumbnail_height=300) {
-		list($source_image_width, $source_image_height, $source_image_type) = getimagesize($source_image_path);
+		/*list($source_image_width, $source_image_height, $source_image_type) = getimagesize($source_image_path);
 		switch ($source_image_type) {
 			case IMAGETYPE_GIF :
 				$source_gd_image = imagecreatefromgif($source_image_path);
@@ -35,7 +37,8 @@ class Thumbnail {
 		imagecopyresampled($thumbnail_gd_image, $source_gd_image, 0, 0, 0, 0, $thumbnail_image_width, $thumbnail_image_height, $source_image_width, $source_image_height);
 		imagejpeg($thumbnail_gd_image, $thumbnail_image_path, 95);
 		imagedestroy($source_gd_image);
-		imagedestroy($thumbnail_gd_image);
+		imagedestroy($thumbnail_gd_image);*/
+		$img = Image::make($source_image_path)->fit($thumbnail_with,$thumbnail_height)->save($thumbnail_image_path);
 		return true;
 	}
 

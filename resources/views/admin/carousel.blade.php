@@ -49,17 +49,26 @@ Carousel
                     </span>
                 </div>
                 <div class="card-body">
-                    <div class="owl-carousel owl-theme" id="carousel3">
-                        <div class=" item">
-                            <img src="{{ asset('assets/img/parallax/photo1.jpg') }}"  alt="image1"> </div>
-                        <div class="item">
-                            <img src="{{ asset('assets/img/parallax/photo2.jpg') }}"  alt="image2"> </div>
-                        <div class="item">
-                            <img src="{{ asset('assets/img/parallax/photo3.jpg') }}"  alt="image3"> </div>
-                        <div class="item">
-                            <img src="{{ asset('assets/img/parallax/photo1.jpg') }}"  alt="image4"> </div>
-                        <div class="item">
-                            <img src="{{ asset('assets/img/parallax/photo2.jpg') }}"  alt="image5"> </div>
+                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="d-block w-100" data-src="holder.js/800x400?auto=yes&bg=555&fg=333&text=first slide" alt="Third slide [800x400]"  data-holder-rendered="true">
+                            </div>
+                            <div class="carousel-item">
+                                <img class="d-block w-100" data-src="holder.js/800x400?auto=yes&bg=555&fg=333&text=second slide" alt="Third slide [800x400]"  data-holder-rendered="true">
+                            </div>
+                            <div class="carousel-item">
+                                <img class="d-block w-100" data-src="holder.js/800x400?auto=yes&bg=555&fg=333&text=Third slide" alt="Third slide [800x400]"  data-holder-rendered="true">
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
                     </div>
                     <!-- End Carousel -->
                 </div>

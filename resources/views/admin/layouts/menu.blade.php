@@ -20,7 +20,7 @@
                data-loop="true"></i>
                LocationStatuses
     </a>
-</li>
+</li>-->
 
 <li class="{{ Request::is('admin/fileStatuses*') ? 'active' : '' }}">
     <a href="{!! route('admin.fileStatuses.index') !!}">
@@ -28,5 +28,5 @@
                data-loop="true"></i>
                FileStatuses
     </a>
-</li>-->
+</li>
 

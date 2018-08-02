@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\File;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Database\Eloquent\Model;
 
@@ -57,5 +58,10 @@ class LocationStatus extends Pivot
 		{
 			$model->user_id = Sentinel::getUser()->id;
 		});
+	}
+
+	public function files()
+	{
+		return $this->hasMany(FileStatus::class,'location_status_id','id');
 	}
 }

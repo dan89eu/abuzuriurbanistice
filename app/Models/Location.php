@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\File;
 use App\User;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Database\Eloquent\Model;
@@ -72,6 +73,20 @@ class Location extends Model
 
 	public function statuses()
 	{
-		return $this->belongsToMany(Status::class)->using(LocationStatus::class)->withTimestamps()->withPivot('name', 'description','user_id');
+		return $this->belongsToMany(Status::class)->using(LocationStatus::class)->withTimestamps()->withPivot('name', 'description','user_id','id');
 	}
+
+	public function locationStatuses()
+	{
+		return $this->hasMany(LocationStatus::class);
+	}
+
+	public function files()
+	{
+		return $this->hasMany(FileStatus::class);
+	}
+
+
+
+
 }

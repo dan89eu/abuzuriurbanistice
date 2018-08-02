@@ -198,7 +198,7 @@ $.each(locations,function(key,val){
 		lat: val.lat,
 		lng: val.lng,
 		title:val.formatted_address,
-		icon:pinSymbol(val.status.color),
+		icon:pinSymbol(val.statuses[0].color),
 		infoWindow: {
 			content : '<h4>'+val.name+'</h4><p>Status:'+val.status.name+'</p><p><a href="/admin/locations/'+val.id+'" target="_blank">View Location</a> </p>'
 		}

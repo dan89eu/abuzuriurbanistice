@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -19,7 +20,7 @@ class FileStatus extends Model
 
     public $fillable = [
         'location_id',
-        'status_id',
+        'location_status_id',
         'name',
         'user_id',
         'file_id'
@@ -32,7 +33,7 @@ class FileStatus extends Model
      */
     protected $casts = [
         'location_id' => 'integer',
-        'status_id' => 'integer',
+        'location_status_id' => 'integer',
         'name' => 'string',
         'user_id' => 'integer',
         'file_id' => 'integer'
@@ -46,4 +47,19 @@ class FileStatus extends Model
     public static $rules = [
         
     ];
+
+	public static function boot()
+	{
+		parent::boot();
+
+		static::creating(function($model)
+		{
+			$model->user_id = Sentinel::getUser()->id;
+		});
+	}
+
+	public function files()
+	{
+		$this->belongsTo(FileStatus::class);
+	}
 }

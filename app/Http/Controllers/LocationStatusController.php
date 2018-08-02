@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\File;
 use App\Http\Requests;
 use App\Http\Requests\CreateLocationStatusRequest;
 use App\Http\Requests\UpdateLocationStatusRequest;
+use App\Models\FileStatus;
 use App\Repositories\LocationStatusRepository;
 use App\Http\Controllers\AppBaseController as InfyOmBaseController;
 use Illuminate\Http\Request;
@@ -61,6 +63,16 @@ class LocationStatusController extends InfyOmBaseController
         $input = $request->all();
 
         $locationStatus = $this->locationStatusRepository->create($input);
+
+	    foreach ($input["file"] as $fileid){
+		    $upload = File::find($fileid);
+		    $file = new FileStatus();
+		    $file->location_id = $locationStatus->location_id;
+		    $file->location_status_id = $locationStatus->id;
+		    $file->file_id = $fileid;
+		    $file->name = $upload->filename;
+		    $file->save();
+	    }
 
         Flash::success('LocationStatus saved successfully.');
 

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\File;
 use App\Http\Requests;
 use App\Http\Requests\CreateLocationRequest;
 use App\Http\Requests\UpdateLocationRequest;
+use App\Models\FileStatus;
 use App\Models\LocationStatus;
 use App\Repositories\LocationRepository;
 use App\Http\Controllers\AppBaseController as InfyOmBaseController;
@@ -36,7 +38,12 @@ class LocationController extends InfyOmBaseController
     {
 
         $this->locationRepository->pushCriteria(new RequestCriteria($request));
-        $locations = $this->locationRepository->all();
+	    $locations = $this->locationRepository->with(['status','statuses'=>function($query){
+	    	$query->orderBy('location_status.created_at','desc');
+	    },'files'])->all();
+	    if($request->ajax()){
+	    	return $this->sendResponse($locations,"");
+	    }
         return view('admin.locations.index')
             ->with('locations', $locations);
     }
@@ -71,6 +78,16 @@ class LocationController extends InfyOmBaseController
 	    $update->description = "";
 	    $update->user_id = Sentinel::getUser()->id;
 	    $update->save();
+
+	    foreach ($input["file"] as $fileid){
+		    $upload = File::find($fileid);
+	    	$file = new FileStatus();
+		    $file->location_id = $update->location_id;
+		    $file->location_status_id = $update->id;
+		    $file->file_id = $fileid;
+		    $file->name = $upload->filename;
+		    $file->save();
+	    }
 
         Flash::success('Location saved successfully.');
 

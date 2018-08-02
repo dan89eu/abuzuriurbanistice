@@ -38,7 +38,7 @@ class FileController extends JoshController {
 
         $file_temp->move($destinationPath, $safeName);
 
-        Thumbnail::generate_image_thumbnail($destinationPath . $safeName, $destinationPath . 'thumb_' . $safeName);
+	    Thumbnail::generate_image_thumbnail($destinationPath . $safeName, $destinationPath . 'thumb_' . $safeName,470,315);
 
         return $fileItem->toJson();
     }
